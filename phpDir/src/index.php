@@ -16,7 +16,7 @@ function maxID() {
   $select_query = "SELECT MAX(id) FROM Students";
   $select_answer = mysqli_query($connection, $select_query);
   $maxId = mysqli_fetch_assoc($select_answer);
-  $maxId = intval($maxId["MAX(id)"]) + 1;
+  $maxId = intval($maxId["MAX(id)"]);
 
   return $maxId;
 }
@@ -66,9 +66,7 @@ function maxID() {
       <?php
       // ADD STUDENT
       if (isset($_POST["addStudent"])) {
-        // define amount of students
-
-        $id = maxId(); // new student's id
+        $id = maxId() + 1; // new student's id
         // Inserting student to DB an Student list
         $addedName = $_POST["name"];
         $insert_query = "INSERT INTO `Students` (id, name) VALUES('$id', '$addedName')";
@@ -80,10 +78,19 @@ function maxID() {
   
       // DELETE STUDENT
       if (isset($_POST["deleteStudent"])) {
+
         // Inserting student to DB an Student list
         $deletingID = $_POST["id"];
+        $maxID = maxID();
         $delete_query = "DELETE FROM Students WHERE id='$deletingID'";
         $delete_result = mysqli_query($connection, $delete_query);
+
+        // Changing all student's id after id of deleted student
+        for ($id = $deletingID + 1; $id <= $maxID; $id++) {
+          $update_query = "UPDATE Students SET id=id-1 WHERE id='$id'";
+          $update_result = mysqli_query($connection, $update_query);
+        }
+
         // to clear $_POST variable and input data:
         unset($_POST);
         echo '<meta http-equiv="refresh" content="0">';
