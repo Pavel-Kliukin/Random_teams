@@ -11,7 +11,14 @@ if ($connection->connect_error) {
 
 // Getting max ID from Students table
 function maxID() {
+  global $connection;
 
+  $select_query = "SELECT MAX(id) FROM Students";
+  $select_answer = mysqli_query($connection, $select_query);
+  $maxId = mysqli_fetch_assoc($select_answer);
+  $maxId = intval($maxId["MAX(id)"]) + 1;
+
+  return $maxId;
 }
 ?>
 
@@ -60,11 +67,8 @@ function maxID() {
       // ADD STUDENT
       if (isset($_POST["addStudent"])) {
         // define amount of students
-        $select_query = "SELECT MAX(id) FROM Students";
-        $select_answer = mysqli_query($connection, $select_query);
-        $maxId = mysqli_fetch_assoc($select_answer);
-        $maxId = intval($maxId["MAX(id)"]);
-        $id = $maxId + 1; // new student's id
+
+        $id = maxId(); // new student's id
         // Inserting student to DB an Student list
         $addedName = $_POST["name"];
         $insert_query = "INSERT INTO `Students` (id, name) VALUES('$id', '$addedName')";
