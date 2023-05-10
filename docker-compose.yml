@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  php-apache-environment:
+    container_name: php-project-MAMP
+    build:
+      context: ./phpDir
+      dockerfile: Dockerfile
+    depends_on:
+      - myprojectdb
+    volumes:
+      - ./phpDir/src:/var/www/html/
+    ports:
+      - 8077:80
+  myprojectdb:
+    container_name: myprojectdb
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: lionPass
+      MYSQL_DATABASE: phpProjectDB
+      MYSQL_USER: Pavel
+      MYSQL_PASSWORD: 777
+    ports:
+      - "3309:3308"
+    volumes:
+      - ./:/docker-entrypoint-initdb.d
+  php-project-myadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "9077:80"
+    restart: always
+    environment:
+      PMA_HOST: myprojectdb
+    depends_on:
+      - myprojectdb
