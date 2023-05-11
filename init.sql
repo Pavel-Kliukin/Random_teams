@@ -1,3 +1,5 @@
+TRUNCATE Students;
+
 INSERT INTO Students (id, name)
 VALUES
     (1, 'Isaac Newton'),
