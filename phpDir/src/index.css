@@ -25,6 +25,11 @@ main {
   margin-bottom: 1rem;
 }
 
+.rightSide{
+  display: flex;
+  flex-direction: row;
+}
+
 .teamOutput{
   margin-left: 3rem;
 }
