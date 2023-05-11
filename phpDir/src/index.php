@@ -27,11 +27,11 @@
     // Inserting student to DB an Student list
     $addedName = $_POST["name"];
     $insert_query = "INSERT INTO `Students` (id, name) VALUES('$id', '$addedName')";
-      $insert_result = mysqli_query($connection, $insert_query);
-      // to clear $_POST variable and input data:
-      unset($_POST);
-      echo '<meta http-equiv="refresh" content="0">';
-    }
+    $insert_result = mysqli_query($connection, $insert_query);
+    // to clear $_POST variable and input data:
+    unset($_POST);
+    echo '<meta http-equiv="refresh" content="0">';
+  }
 
   // DELETE STUDENT
   if (isset($_POST["deleteStudent"])) {
@@ -107,20 +107,47 @@
             if ($team_size < 2 || $number_of_students - $team_size < 2) {
               echo '<h1>Dividing doesn\'t make sense</h1>';
             } else {
+
+              // to clear $_POST variable and input data:
+              unset($_POST);
+              // echo '<meta http-equiv="refresh" content="0">';
+
               $students_array = range(1, $number_of_students); // [1, 2, 3, ... , maxID]
               $team_number = 1;
               while (count($students_array) > $team_size + 1) {
                 echo "<div class='team'><h2>Team $team_number</h2><div class='names'>";
                   for ($i = 1; $i <= $team_size; $i++){
-                    $randomNumber = rand(1, $number_of_students);
-
+                    $random_number = rand(0, count($students_array) - 1);
+                    $random_students_id = $students_array[$random_number]; //choose random student's id
+                    
+                    //take the name of that random student from DB
+                    $query = "SELECT * FROM Students WHERE id='$random_students_id'";
+                    $query_result = mysqli_query($connection, $query);
+                    $random_student = mysqli_fetch_row($query_result)[1];
+                    
+                    echo "<p>$i. $random_student</p>"; //print that random student in current team
+                    unset($students_array[$random_number]); //delete that random student from array
+                    $students_array = \array_values($students_array); //resets the indexes (keys) of array after deleting element (stupid PHP!)
                   }
                 echo "</div></div>";
-                exit;
+                $team_number++;
               }
-              // to clear $_POST variable and input data:
-              unset($_POST);
-              echo '<meta http-equiv="refresh" content="0">';
+              //output of the last Team (if exist)
+              $i=1;
+              echo "<div class='team'><h2>Team $team_number</h2><div class='names'>";
+                foreach($students_array as $student) {
+                  //take the name of the student from DB
+                  $query = "SELECT * FROM Students WHERE id='$student'";
+                  $query_result = mysqli_query($connection, $query);
+                  $random_student = mysqli_fetch_row($query_result)[1];
+                  
+                  echo "<p>$i. $random_student</p>"; //print student in current team
+                  $i++;
+                }
+              echo "</div></div>";
+              
+              // unset($_POST);
+              // echo '<meta http-equiv="refresh" content="0">';
             }
           }
         ?>
