@@ -116,7 +116,7 @@
             $team_size = $_POST['howManyStudents'];
             $number_of_students = maxID();
             if ($team_size < 2 || $number_of_students - $team_size < 2) {
-              echo '<h1>Dividing doesn\'t make sense</h1>';
+              echo '<div class="noSense"><h1>Dividing doesn\'t make sense</h1><div>';
             } else {
   
               $students_array = range(1, $number_of_students); // [1, 2, 3, ... , maxID]
@@ -155,23 +155,24 @@
             }
           }
         ?>
+
         <script>
-          // This script shows teams one by one with a delay of 1 second
+          // This script shows teams one by one with a delay of 0.5 second
           const teams = document.querySelectorAll('.team');
           let index = 0;
 
           function showNextTeam() {
             if (index < teams.length) {
               teams[index].style.display = 'block';
-              teams[index].style.animation = 'blur 2s ease';
+              teams[index].style.animation = 'blur 2s ease'; //blur is writen in the .css file
               teams[index].style.animationDelay = '-1.5s';
               index++;
               setTimeout(showNextTeam, 500); // 0.5 second delay
             }
           }
-
           showNextTeam();
         </script>
+
       </div>
     </main>
   </div>
