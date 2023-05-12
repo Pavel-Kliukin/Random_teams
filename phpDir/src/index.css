@@ -5,31 +5,93 @@
 }
 
 body {
-  background-color: antiquewhite;
-  font-family: 'Noto Sans', sans-serif;
+  background-color: white;
+  height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 main {
   display: flex;
+  justify-content:flex-end;
+  align-items: flex-start;
+}
+
+header {
+  height: 10vh;
+  width: 100vw;
+  margin-bottom: 2rem;
+  background-color: #333;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .studentsList {
-  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .forms {
-  margin-left: 3rem;
+  margin: 0 5rem;
 }
 
-#addForm, #deleteForm, #howManyForm {
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+lable {
+  margin-bottom: 0.3rem;
+}
+
+input {
+  width: 10rem;
+  height: 1.5rem;
+}
+
+button {
+  width: 5rem;
+  height: 1.5rem;
+}
+
+.teamsOutput{
+  max-height: 80vh;
+  min-width: 35vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: left;
+}
+
+.team {
+  max-width:auto;
+  margin-left: 1rem;
   margin-bottom: 1rem;
 }
 
-.rightSide{
-  display: flex;
-  flex-direction: row;
+/* blur starts by script in php file */
+@keyframes blur {
+  0% {
+    filter: blur(80px);
+    color: rgb(244, 239, 239);
+  }
+  100% {
+    filter: blur(0);
+  }
 }
 
-.teamOutput{
-  margin-left: 3rem;
+footer {
+  height: 3vh;
+  width: 100vw;
+  background-color: #333;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
