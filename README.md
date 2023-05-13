@@ -21,3 +21,6 @@ https://github.com/Pavel-Kliukin/Random_teams/assets/98514950/f08ca911-194e-4f8c
 ## To use this app:
 1. Clone this repository to your computer.
 2. In your Terminal go to the folder with this app and write command: `docker-compose up` 
+3. Create a table "Students" with columns 'id' and 'name' in the DataBase named "phpProjectDB" which is located at http://localhost:9077/ (use name: 'Pavel' and password: '777' to get there).
+4. In your browser go to http://localhost:8077/index.php
+5. Fill the table with names of your students via phpMyAdmin or form in the application.
